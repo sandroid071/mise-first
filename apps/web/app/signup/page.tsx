@@ -1,0 +1,5 @@
+"use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+export default function SignUp() { const router = useRouter(); const [error, setError] = useState(""); async function submit(form: FormData) { const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/v1"}/auth/sign-up`, { method:"POST", headers:{"content-type":"application/json"}, body:JSON.stringify(Object.fromEntries(form)) }); if (!res.ok) return setError("We could not create your account."); router.push("/setup/business"); } return <main className="auth"><h1>Set up Mise</h1><form action={submit}><label>Name<input name="name" required /></label><label>Email<input name="email" type="email" required /></label><label>Password<input name="password" type="password" minLength={12} required /></label>{error && <p role="alert">{error}</p>}<button>Create account</button></form><p>Just looking around? <Link href="/app?demo=1">Use the sample restaurant</Link>.</p></main>; }

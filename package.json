@@ -1,0 +1,14 @@
+{
+  "name": "mise",
+  "private": true,
+  "packageManager": "pnpm@9.15.4",
+  "engines": { "node": ">=20.11" },
+  "scripts": {
+    "build": "corepack pnpm --recursive --if-present run build",
+    "dev": "corepack pnpm --recursive --parallel --if-present run dev",
+    "typecheck": "corepack pnpm --recursive --if-present run typecheck",
+    "test": "corepack pnpm --recursive --if-present run test",
+    "lint": "corepack pnpm --recursive --if-present run lint"
+  },
+  "devDependencies": { "turbo": "^2.3.3", "typescript": "^5.7.2" }
+}

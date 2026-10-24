@@ -1,0 +1,6 @@
+import { useEffect } from "react";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { messages } from "@mise/i18n";
+import { initializeOfflineStore } from "../src/offline";
+export default function Pass() { useEffect(() => { void initializeOfflineStore(); }, []); const t = messages.en; return <SafeAreaView style={styles.page}><Text style={styles.status}>☁ {t.saved}</Text><Text style={styles.title}>{t.pass}</Text><Text style={styles.subtitle}>{t.empty}</Text><View style={styles.pulse}><Text style={styles.big}>₹0</Text><Text>Sales today</Text></View><View style={styles.ticket}><Text style={styles.heading}>Ready for service</Text><Text>Finish setup to invite your team and publish your first roster.</Text></View></SafeAreaView>; }
+const styles = StyleSheet.create({ page:{flex:1,padding:24,backgroundColor:"#FFF8EC"}, status:{color:"#2F7D4F"}, title:{fontSize:38,fontWeight:"700",color:"#2B1E16",marginTop:20}, subtitle:{fontSize:17,color:"#584239",marginVertical:12}, pulse:{backgroundColor:"white",padding:18,borderLeftWidth:5,borderColor:"#F5B83D",borderRadius:12}, big:{fontSize:28,fontWeight:"700"}, ticket:{backgroundColor:"white",borderRadius:16,padding:20,marginTop:18,borderWidth:1,borderStyle:"dashed",borderColor:"#9d8673"}, heading:{fontSize:20,fontWeight:"700",marginBottom:8} });

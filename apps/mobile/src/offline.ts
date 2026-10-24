@@ -1,0 +1,4 @@
+import * as SQLite from "expo-sqlite";
+export type OutboxEvent = { id: string; entity: string; operation: "create" | "update" | "delete"; payload: string; createdAt: string };
+export async function initializeOfflineStore() { const db = await SQLite.openDatabaseAsync("mise.db"); await db.execAsync("PRAGMA journal_mode=WAL; CREATE TABLE IF NOT EXISTS sync_outbox (id TEXT PRIMARY KEY, entity TEXT NOT NULL, operation TEXT NOT NULL, payload TEXT NOT NULL, created_at TEXT NOT NULL, synced_at TEXT);"); return db; }
+export async function queueMutation(event: OutboxEvent) { const db = await initializeOfflineStore(); await db.runAsync("INSERT INTO sync_outbox (id, entity, operation, payload, created_at) VALUES (?, ?, ?, ?, ?)", event.id, event.entity, event.operation, event.payload, event.createdAt); }

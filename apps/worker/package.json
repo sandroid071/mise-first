@@ -1,0 +1,1 @@
+{ "name": "@mise/worker", "version": "0.0.1", "type": "module", "scripts": { "dev": "tsx watch src/main.ts", "build": "tsc", "typecheck": "tsc --noEmit" }, "dependencies": { "bullmq": "^5.34.6" }, "devDependencies": { "@types/node": "^22.10.2", "tsx": "^4.19.2", "typescript": "^5.7.2" } }

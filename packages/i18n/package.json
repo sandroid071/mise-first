@@ -1,0 +1,1 @@
+{ "name": "@mise/i18n", "version": "0.0.1", "type": "module", "exports": "./src/index.ts", "scripts": { "typecheck": "tsc --noEmit", "test": "vitest run" }, "dependencies": { "@formatjs/intl": "^3.1.8" }, "devDependencies": { "typescript": "^5.7.2", "vitest": "^2.1.8" } }

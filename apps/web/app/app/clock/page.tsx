@@ -1,0 +1,3 @@
+"use client";
+import { useState } from "react";
+export default function PlateClock() { const [clocked, setClocked] = useState(false); return <section className="clock-card"><p className="status">THE RAIL · PLATE CLOCK</p><h1>{clocked ? "You’re on the line" : "Ready to start?"}</h1><p>{clocked ? "Clocked in at 10:02 AM · Floor station" : "The Good Fork · 32 Church Street"}</p><div className="plate"><div>{clocked ? "ON SHIFT" : "HOLD TO\nCLOCK IN"}</div></div><button className={clocked ? "secondary" : ""} onClick={() => setClocked(!clocked)}>{clocked ? "Clock out" : "Clock in"}</button><p className="status">● Within location geofence · Saved on this device</p></section>; }

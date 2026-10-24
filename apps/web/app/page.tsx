@@ -1,0 +1,2 @@
+import Link from "next/link";
+export default function Landing() { return <main className="main"><p>MISE · FOOD BUSINESS OPERATING SYSTEM</p><h1>Everything your service needs, on one pass.</h1><p>Run people, stock, and service from one beautifully connected operating system.</p><p><Link href="/signup"><button>Start your setup</button></Link> <Link href="/app?demo=1"><button style={{ background: "#2F7D4F" }}>Use sample restaurant</button></Link></p></main>; }

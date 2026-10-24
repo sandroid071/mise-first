@@ -1,0 +1,1 @@
+{ "expo": { "name": "Mise", "slug": "mise", "scheme": "mise", "version": "0.0.1", "orientation": "default", "userInterfaceStyle": "automatic", "plugins": ["expo-router", "expo-sqlite"] } }

@@ -1,0 +1,14 @@
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+CREATE TABLE tenants (id uuid PRIMARY KEY DEFAULT gen_random_uuid(), name text NOT NULL, country_code text NOT NULL, locale text NOT NULL, currency text NOT NULL, created_at timestamptz NOT NULL DEFAULT now());
+CREATE TABLE users (id uuid PRIMARY KEY DEFAULT gen_random_uuid(), email text UNIQUE NOT NULL, name text NOT NULL, password_hash text NOT NULL, locale text NOT NULL DEFAULT 'en', status text NOT NULL DEFAULT 'active', created_at timestamptz NOT NULL DEFAULT now());
+CREATE TABLE memberships (tenant_id uuid NOT NULL REFERENCES tenants(id), user_id uuid NOT NULL REFERENCES users(id), role text NOT NULL, created_at timestamptz NOT NULL DEFAULT now(), PRIMARY KEY (tenant_id,user_id));
+CREATE TABLE locations (id uuid PRIMARY KEY DEFAULT gen_random_uuid(), tenant_id uuid NOT NULL REFERENCES tenants(id), name text NOT NULL, time_zone text NOT NULL, address text, created_at timestamptz NOT NULL DEFAULT now());
+CREATE TABLE invitations (id uuid PRIMARY KEY DEFAULT gen_random_uuid(), tenant_id uuid NOT NULL REFERENCES tenants(id), email text NOT NULL, role text NOT NULL, location_ids jsonb NOT NULL, token_hash text UNIQUE NOT NULL, expires_at timestamptz NOT NULL, accepted_at timestamptz, created_at timestamptz NOT NULL DEFAULT now());
+CREATE TABLE refresh_sessions (id uuid PRIMARY KEY DEFAULT gen_random_uuid(), user_id uuid NOT NULL REFERENCES users(id), token_hash text UNIQUE NOT NULL, device_name text, expires_at timestamptz NOT NULL, revoked_at timestamptz, created_at timestamptz NOT NULL DEFAULT now());
+CREATE TABLE audit_events (id uuid PRIMARY KEY DEFAULT gen_random_uuid(), tenant_id uuid NOT NULL, actor_user_id uuid, action text NOT NULL, entity_type text NOT NULL, entity_id text NOT NULL, metadata jsonb NOT NULL DEFAULT '{}', created_at timestamptz NOT NULL DEFAULT now());
+ALTER TABLE locations ENABLE ROW LEVEL SECURITY;
+CREATE POLICY location_tenant_isolation ON locations USING (tenant_id = current_setting('app.tenant_id', true)::uuid);
+ALTER TABLE invitations ENABLE ROW LEVEL SECURITY;
+CREATE POLICY invitation_tenant_isolation ON invitations USING (tenant_id = current_setting('app.tenant_id', true)::uuid);
+ALTER TABLE audit_events ENABLE ROW LEVEL SECURITY;
+CREATE POLICY audit_tenant_isolation ON audit_events USING (tenant_id = current_setting('app.tenant_id', true)::uuid);

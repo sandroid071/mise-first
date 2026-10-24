@@ -1,0 +1,12 @@
+export type Brand<T, Name extends string> = T & { readonly __brand: Name };
+export type TenantId = Brand<string, "TenantId">;
+export type LocationId = Brand<string, "LocationId">;
+export type UserId = Brand<string, "UserId">;
+export type Money = { amount: bigint; currency: string };
+export type BusinessDate = Brand<string, "BusinessDate">;
+export type Role = "owner" | "manager" | "shift_lead" | "staff" | "platform_admin";
+export type Permission = "business:read" | "business:write" | "location:read" | "location:write" | "team:invite" | "audit:read";
+export type AuthenticatedActor = { userId: UserId; tenantId: TenantId; role: Role; locationIds: LocationId[] };
+export const asTenantId = (value: string) => value as TenantId;
+export const asLocationId = (value: string) => value as LocationId;
+export const asUserId = (value: string) => value as UserId;
